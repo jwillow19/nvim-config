@@ -7,31 +7,34 @@
 " 	1. Insert command - Plug <github_user/repo_name> in the plugins block 
 " 	2. Run the PlugInstall command in vim
 "
-" ** Neovim installation and Configuration Tutorial:  https://www.youtube.com/watch?v=ZEFXeRIFvN0 **
+" Neovim installation and Configuration Tutorial:  https://www.youtube.com/watch?v=ZEFXeRIFvN0 **
 "
 " 
 " Plugins:
-" 	gruvbox - Color scheme for Vim editor 
-"	nerdree - File system explorer for Vim editor. Browse visually complex
-"		  directory structures
-"	ctrlp   - File finder for vim
-"	coc 	- Syntax highiighting, code completion (requires nodejs).
-"		  Require addition installation for different languages with
-"		  COCInstall. (I.e., CocInstall coc-python)	
-"   prettier - format your code nicely on save, (requires node | yarn, npm)
-"
+" 	gruvbox   - Color scheme for Vim editor 
+"	  nerdree   - File system explorer for Vim editor. Browse visually complex
+"		                directory structures
+"	  ctrlp     - File finder for vim
+"	  coc 	    - Syntax highiighting, code completion (requires nodejs).
+"		               *Require addition installation for different languages with
+"		               *COCInstall. (I.e., CocInstall coc-python)	
+"   prettier  - format your code nicely on save, (requires node | yarn, npm)
+"   lightline - statusline / tabline plugin; changes appearance of
+"                   statusline
+"   
 " Shortcut Keys:
 " 	CTRL + n: Opens directory tree with nerdtree, q to quit
-"	CTRL + p: Use fuzzy buffer, mru, tag, file finder with ctrlp, use ESC
-"		   key to quit
-"	Coc Shortcuts: 
-" 	Tab, Shift-Tab: Naavigate Code completion list
-"	Shift + K: Hover to show function definition
-"	    - require additional code to scroll documentation window (google
-"	    search)
-"	Command gd: Jedi, go to definitioni
-"	    Ctrl + o: return to editor from function definition
-"	Ctrl + space: Autocompletion in insert mode. 
+"	  CTRL + p: Use fuzzy buffer, mru, tag, file finder with ctrlp, use ESC
+"		          key to quit
+"
+"	  Coc Shortcuts: 
+" 	    Tab, Shift-Tab: Naavigate Code completion list
+"	      Shift + K:      Hover to show function definition
+"	                      - require additional code to scroll documentation window (google
+"	                      search)
+"	      Command gd:     Jedi, go to function definition
+"	      Ctrl + o:       return to editor from function definition
+"	      Ctrl + space:   Autocompletion in insert mode. 
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
@@ -40,13 +43,31 @@
 set nocompatible				    " be iMproved, required
 filetype off					    " required
 
-" Plugins: 
+" Plugins Manager: 
 call plug#begin('~/.config/nvim/plugged')
-    Plug 'morhetz/gruvbox'
-    Plug 'preservim/nerdtree'
-    Plug 'ctrlpvim/ctrlp.vim'
+
+    " Language Compatability
+    Plug 'sheerun/vim-polyglot'
+
+    " Intellisense
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    
+    " Pretty
+    Plug 'cocopon/iceberg.vim'
+    Plug 'itchyny/lightline.vim'
     Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+    
+    " Run Current File
+    Plug 'thinca/vim-quickrun'
+
+    " Theme
+    Plug 'morhetz/gruvbox'
+    
+    " Directory Tree
+    Plug 'preservim/nerdtree'
+    
+    Plug 'ctrlpvim/ctrlp.vim'
+
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -58,7 +79,7 @@ colorscheme gruvbox
 " nerdtree - Toggle NerdTree with ctrl+n
 nnoremap <C-n> :NERDTreeFocus<CR> 	 	
 
-" COC Config - 
+" -- COC Config -- 
 "
 " command for coc - format on save, this is from the coc-prettier readme
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
@@ -234,19 +255,51 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+" -- Lightline Config ---
+let g:lightline = {
+      \ 'colorscheme': 'iceberg',
+      \ }
+
+" Colors and layout
+set background=dark
+set t_Co=256
+colorscheme iceberg
+set termguicolors
+
 "**************************************************************************************************
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NVim Configuration: set numbers, search highiighting 
 
+set mouse=a
+set nowrap
+
+set number
+set title
+set titlestring=Editing:⠀%f
+set hidden
+set splitbelow
+
+" Indentation
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+set cindent
+set smartindent
+set autoindent
+set smartcase
+
+" Disables default statusline, using lightline to display statusline instead
+set noshowmode
+
+filetype indent on
 filetype plugin indent on 			" required
 syntax on 				        	" Syntax highiighting
 set colorcolumn=100                 " ColorColumn at 100  
-set background=dark
 highlight ColorColumn ctermbg=0 guibg=lightgrey
-set number
+
+set encoding=utf-8
+
+set splitbelow
+
 set hlsearch
-set tabstop=4 softtabstop=4
-set smartindent
-set smartcase
 set noerrorbells
-set expandtab
