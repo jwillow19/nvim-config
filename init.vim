@@ -73,9 +73,6 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin Configurations: 
 
-" gruvbox - Apply colorscheme
-colorscheme gruvbox 				
-
 " nerdtree - Toggle NerdTree with ctrl+n
 nnoremap <C-n> :NERDTreeFocus<CR> 	 	
 
@@ -260,11 +257,6 @@ let g:lightline = {
       \ 'colorscheme': 'iceberg',
       \ }
 
-" Colors and layout
-set background=dark
-set t_Co=256
-colorscheme iceberg
-set termguicolors
 
 "**************************************************************************************************
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -291,10 +283,18 @@ set smartcase
 " Disables default statusline, using lightline to display statusline instead
 set noshowmode
 
+
+" Colors and layout (see ~/.config/nvim/colors/monokai.vim )
+" Uncomment and switch up colorscheme
+set termguicolors
+colorscheme monokai
+" colorscheme iceberg
+" colorscheme gruvbox
+
 filetype indent on
 filetype plugin indent on 			" required
-syntax on 				        	" Syntax highiighting
-set colorcolumn=100                 " ColorColumn at 100  
+syntax on 				        	    " Enable syntax highiighting
+set colorcolumn=100             " ColorColumn at 100  
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 set encoding=utf-8
